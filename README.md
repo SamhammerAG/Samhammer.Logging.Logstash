@@ -1,6 +1,7 @@
 # Samhammer.Logging.Logstash
 
 ## Usage
+This package is used to 
 
 #### How to add this to your project:
 - reference this package to your project: https://www.nuget.org/packages/Samhammer.Logging.Logstash/
@@ -30,9 +31,9 @@
 ## Contribute
 
 #### How to publish package
-- set package version in Samhammer.DependencyInjection.csproj
+- set package version in Samhammer.Logging.Logstash.csproj
 - add information to changelog
 - create git tag
 - dotnet pack -c Release
-- nuget push .\bin\Release\Samhammer.DependencyInjection.*.nupkg NUGET_API_KEY -src https://api.nuget.org/v3/index.json
+- nuget push .\bin\Release\Samhammer.Logging.Logstash.*.nupkg NUGET_API_KEY -src https://api.nuget.org/v3/index.json
 - (optional) nuget setapikey NUGET_API_KEY -source https://api.nuget.org/v3/index.json
