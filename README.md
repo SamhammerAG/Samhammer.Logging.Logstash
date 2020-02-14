@@ -1,0 +1,1 @@
+# Samhammer.Logging.Logstash
