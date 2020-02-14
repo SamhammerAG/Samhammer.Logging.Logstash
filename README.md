@@ -28,6 +28,14 @@ This package is used to
   },
 ```
 
+#### Example elastic index template:
+```
+projectname-{environment}-{brand}-{date}
+```
+The {environment} placeholder will be replaced with the environment name.
+The {brand} placeholder will be replaced with the value of a environment varialbe called "Brand".
+The {date} placeholder will be replaced with {0:yyyy.MM}.
+
 ## Contribute
 
 #### How to publish package
