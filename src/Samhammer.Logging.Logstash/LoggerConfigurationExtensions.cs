@@ -29,7 +29,7 @@ namespace Samhammer.Logging.Logstash
         public static string BuildElasticIndex(string indexTemplate, string environment)
         {
             // ATTENTION this validation is required to ensure elastic gets an valid index name, otherwise no logs are written
-            var indexRegex = new Regex(@"^((([a-z])|({environment})|({brand}))-?)*$");
+            var indexRegex = new Regex(@"^((([a-z])|({date})|({environment})|({brand}))-?)*$");
 
             if (!indexRegex.IsMatch(indexTemplate))
             {
@@ -38,7 +38,8 @@ namespace Samhammer.Logging.Logstash
 
             var retVal = indexTemplate
                 .Replace("{environment}", environment.ToLower())
-                .Replace("{brand}", Environment.GetEnvironmentVariable("Brand"));
+                .Replace("{brand}", Environment.GetEnvironmentVariable("Brand"))
+                .Replace("{date}", "{0:yyyy.MM}");
 
             return retVal;
         }
