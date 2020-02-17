@@ -27,9 +27,6 @@ This package is a implementation of the serilog http sink https://github.com/Fan
             },
             {
                 "{brand}", Environment.GetEnvironmentVariable("Brand")
-            },
-            {
-                "{date}", "{0:yyyy.MM}"
             }
         };
     }
@@ -57,7 +54,7 @@ This package is a implementation of the serilog http sink https://github.com/Fan
 
 #### Example elastic index template:
 ```
-projectname-{environment}-{brand}-{date}
+projectname-{environment}-{brand}
 ```
 The placeholders in the elastic index template will be replaced with the values of the placeholders dictionary.
 
