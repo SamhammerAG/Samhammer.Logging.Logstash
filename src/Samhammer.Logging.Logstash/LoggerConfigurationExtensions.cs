@@ -31,6 +31,11 @@ namespace Samhammer.Logging.Logstash
         {
             var index = indexTemplate;
 
+            if (string.IsNullOrWhiteSpace(index))
+            {
+                return string.Empty;
+            }
+
             if (placeholders != null)
             {
                 foreach (var placeholder in placeholders)
@@ -44,7 +49,7 @@ namespace Samhammer.Logging.Logstash
 
             if (!indexRegex.IsMatch(index))
             {
-                throw new ArgumentException($"elastic index {indexTemplate} contains invalid characters", nameof(indexTemplate));
+                throw new ArgumentException($"elastic index {index} contains invalid characters", nameof(index));
             }
 
             return index;
