@@ -1,3 +1,5 @@
+﻿[![Build Status](https://travis-ci.com/SamhammerAG/Samhammer.Logging.Logstash.svg?branch=master)](https://travis-ci.com/SamhammerAG/Samhammer.Logging.Logstash)
+
 # Samhammer.Logging.Logstash
 
 ## Usage
