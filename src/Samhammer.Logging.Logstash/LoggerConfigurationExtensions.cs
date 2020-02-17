@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
 using Serilog;
@@ -7,11 +8,11 @@ namespace Samhammer.Logging.Logstash
 {
     public static class LoggerConfigurationExtensions
     {
-        public static LoggerConfiguration WriteToLogstash(this LoggerConfiguration serilogConfig, IConfiguration configuration, string environment)
+        public static LoggerConfiguration WriteToLogstash(this LoggerConfiguration serilogConfig, IConfiguration configuration, IDictionary<string, string> placeholders = null)
         {
             var logstashOptions = LoadLogstashOptions(configuration);
 
-            var index = BuildElasticIndex(logstashOptions.ElasticIndex, environment);
+            var index = BuildElasticIndex(logstashOptions.ElasticIndex, placeholders);
 
             serilogConfig.WriteTo.Http(
                 $"{logstashOptions.Url}/{index}",
@@ -26,20 +27,22 @@ namespace Samhammer.Logging.Logstash
             return logstashOptions;
         }
 
-        public static string BuildElasticIndex(string indexTemplate, string environment)
+        public static string BuildElasticIndex(string indexTemplate, IDictionary<string, string> placeholders)
         {
             // ATTENTION this validation is required to ensure elastic gets an valid index name, otherwise no logs are written
-            var indexRegex = new Regex(@"^((([a-z])|({date})|({environment})|({brand}))-?)*$");
+            var indexRegex = new Regex(@"^((([a-z]))-?)*$");
 
             if (!indexRegex.IsMatch(indexTemplate))
             {
                 throw new ArgumentException($"elastic index {indexTemplate} contains invalid characters", nameof(indexTemplate));
             }
 
-            var retVal = indexTemplate
-                .Replace("{environment}", environment.ToLower())
-                .Replace("{brand}", Environment.GetEnvironmentVariable("Brand"))
-                .Replace("{date}", "{0:yyyy.MM}");
+            var retVal = indexTemplate;
+
+            foreach (var placeholder in placeholders)
+            {
+                retVal = retVal.Replace(placeholder.Key, placeholder.Value);
+            }
 
             return retVal;
         }
