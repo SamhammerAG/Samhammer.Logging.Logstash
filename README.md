@@ -1,12 +1,16 @@
 # Samhammer.Logging.Logstash
 
 ## Usage
-This package is used to 
+This package is a implementation of the serilog http sink https://github.com/FantasticFiasco/serilog-sinks-http to use logstash.
 
 #### How to add this to your project:
 - reference this package to your project: https://www.nuget.org/packages/Samhammer.Logging.Logstash/
 - call WriteToLogstash on the LoggerConfiguration from Serilog
 - add the logstash configuration to the appsettings
+
+```csharp
+LoggerConfiguration.WriteToLogstash(Configuration, Environment);
+```
 
 #### Example appsettings configuration:
 ```json
