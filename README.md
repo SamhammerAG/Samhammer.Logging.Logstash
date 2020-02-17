@@ -8,8 +8,29 @@ This package is a implementation of the serilog http sink https://github.com/Fan
 - call WriteToLogstash on the LoggerConfiguration from Serilog
 - add the logstash configuration to the appsettings
 
+#### Example:
 ```csharp
-LoggerConfiguration.WriteToLogstash(Configuration, Environment);
+    protected virtual void WriteToLogstash()
+    {
+        var placeholders = BuildElasticIndexPlaceholders();
+        SerilogConfig.WriteToLogstash(Configuration, placeholders);
+    }
+
+    protected virtual Dictionary<string, string> BuildElasticIndexPlaceholders()
+    {
+        return new Dictionary<string, string>
+        {
+            {
+                "{environment}", EnvironmentName
+            },
+            {
+                "{brand}", Environment.GetEnvironmentVariable("Brand")
+            },
+            {
+                "{date}", "{0:yyyy.MM}"
+            }
+        };
+    }
 ```
 
 #### Example appsettings configuration:
@@ -36,9 +57,7 @@ LoggerConfiguration.WriteToLogstash(Configuration, Environment);
 ```
 projectname-{environment}-{brand}-{date}
 ```
-The {environment} placeholder will be replaced with the environment name.
-The {brand} placeholder will be replaced with the value of a environment varialbe called "Brand".
-The {date} placeholder will be replaced with {0:yyyy.MM}.
+The placeholders in the elastic index template will be replaced with the values of the placeholders dictionary.
 
 ## Contribute
 
