@@ -29,22 +29,25 @@ namespace Samhammer.Logging.Logstash
 
         public static string BuildElasticIndex(string indexTemplate, IDictionary<string, string> placeholders)
         {
+            var index = indexTemplate;
+
+            if (placeholders != null)
+            {
+                foreach (var placeholder in placeholders)
+                {
+                    index = index.Replace(placeholder.Key, placeholder.Value);
+                }
+            }
+
             // ATTENTION this validation is required to ensure elastic gets an valid index name, otherwise no logs are written
             var indexRegex = new Regex(@"^((([a-z]))-?)*$");
 
-            if (!indexRegex.IsMatch(indexTemplate))
+            if (!indexRegex.IsMatch(index))
             {
                 throw new ArgumentException($"elastic index {indexTemplate} contains invalid characters", nameof(indexTemplate));
             }
 
-            var retVal = indexTemplate;
-
-            foreach (var placeholder in placeholders)
-            {
-                retVal = retVal.Replace(placeholder.Key, placeholder.Value);
-            }
-
-            return retVal;
+            return index;
         }
     }
 }
