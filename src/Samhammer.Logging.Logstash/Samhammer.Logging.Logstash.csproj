@@ -3,12 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <CodeAnalysisRuleSet>..\stylecop.ruleset</CodeAnalysisRuleSet>
-	<Company>Samhammer AG</Company>
+  <Company>Samhammer AG</Company>
     <Authors>Samhammer AG</Authors>
     <PackageProjectUrl>https://github.com/SamhammerAG/Samhammer.Logging.Logstash</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SamhammerAG/Samhammer.Logging.Logstash</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/SamhammerAG/Samhammer.Logging.Logstash/blob/master/LICENSE</PackageLicenseUrl>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
