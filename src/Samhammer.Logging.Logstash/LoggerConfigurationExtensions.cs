@@ -16,7 +16,7 @@ namespace Samhammer.Logging.Logstash
 
             var index = BuildElasticIndex(logstashOptions.ElasticIndex, placeholders);
 
-            serilogConfig.WriteTo.DurableHttpUsingFileSizeRolledBuffers(
+            serilogConfig.WriteTo.Http(
                 $"{logstashOptions.Url}/{index}",
                 batchFormatter: new ArrayBatchFormatter(),
                 textFormatter: new ElasticsearchJsonFormatter(),
