@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
 using Serilog;
+using Serilog.Formatting.Elasticsearch;
+using Serilog.Sinks.Http.BatchFormatters;
 
 namespace Samhammer.Logging.Logstash
 {
@@ -14,8 +16,10 @@ namespace Samhammer.Logging.Logstash
 
             var index = BuildElasticIndex(logstashOptions.ElasticIndex, placeholders);
 
-            serilogConfig.WriteTo.Http(
+            serilogConfig.WriteTo.DurableHttpUsingFileSizeRolledBuffers(
                 $"{logstashOptions.Url}/{index}",
+                batchFormatter: new ArrayBatchFormatter(),
+                textFormatter: new ElasticsearchJsonFormatter(),
                 httpClient: new BasicAuthenticatedHttpClient(logstashOptions.UserName, logstashOptions.Password));
             return serilogConfig;
         }
