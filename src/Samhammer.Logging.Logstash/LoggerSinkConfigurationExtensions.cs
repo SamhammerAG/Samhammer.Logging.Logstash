@@ -14,7 +14,12 @@ namespace Samhammer.Logging.Logstash
         public static LoggerSinkConfiguration Logstash(this LoggerSinkConfiguration sinkConfiguration, IConfiguration configuration, IDictionary<string, string> placeholders = null)
         {
             var logstashOptions = LoadLogstashOptions(configuration);
+            sinkConfiguration.Logstash(logstashOptions, placeholders);
+            return sinkConfiguration;
+        }
 
+        public static LoggerSinkConfiguration Logstash(this LoggerSinkConfiguration sinkConfiguration, LogstashOptions logstashOptions, IDictionary<string, string> placeholders = null)
+        {
             var index = BuildElasticIndex(logstashOptions.ElasticIndex, placeholders);
 
             sinkConfiguration.Http(
@@ -23,13 +28,6 @@ namespace Samhammer.Logging.Logstash
                 textFormatter: new ElasticsearchJsonFormatter(),
                 httpClient: new BasicAuthenticatedHttpClient(logstashOptions.UserName, logstashOptions.Password));
             return sinkConfiguration;
-        }
-
-        private static LogstashOptions LoadLogstashOptions(IConfiguration configuration)
-        {
-            var logstashOptions = new LogstashOptions();
-            configuration.GetSection("serilog:logstash").Bind(logstashOptions);
-            return logstashOptions;
         }
 
         public static string BuildElasticIndex(string indexTemplate, IDictionary<string, string> placeholders)
@@ -58,6 +56,13 @@ namespace Samhammer.Logging.Logstash
             }
 
             return index;
+        }
+
+        private static LogstashOptions LoadLogstashOptions(IConfiguration configuration)
+        {
+            var logstashOptions = new LogstashOptions();
+            configuration.GetSection("serilog:logstash").Bind(logstashOptions);
+            return logstashOptions;
         }
     }
 }
