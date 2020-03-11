@@ -3,25 +3,26 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
 using Serilog;
+using Serilog.Configuration;
 using Serilog.Formatting.Elasticsearch;
 using Serilog.Sinks.Http.BatchFormatters;
 
 namespace Samhammer.Logging.Logstash
 {
-    public static class LoggerConfigurationExtensions
+    public static class LoggerSinkConfigurationExtensions
     {
-        public static LoggerConfiguration WriteToLogstash(this LoggerConfiguration serilogConfig, IConfiguration configuration, IDictionary<string, string> placeholders = null)
+        public static LoggerSinkConfiguration Logstash(this LoggerSinkConfiguration sinkConfiguration, IConfiguration configuration, IDictionary<string, string> placeholders = null)
         {
             var logstashOptions = LoadLogstashOptions(configuration);
 
             var index = BuildElasticIndex(logstashOptions.ElasticIndex, placeholders);
 
-            serilogConfig.WriteTo.Http(
+            sinkConfiguration.Http(
                 $"{logstashOptions.Url}/{index}",
                 batchFormatter: new ArrayBatchFormatter(),
                 textFormatter: new ElasticsearchJsonFormatter(),
                 httpClient: new BasicAuthenticatedHttpClient(logstashOptions.UserName, logstashOptions.Password));
-            return serilogConfig;
+            return sinkConfiguration;
         }
 
         private static LogstashOptions LoadLogstashOptions(IConfiguration configuration)
