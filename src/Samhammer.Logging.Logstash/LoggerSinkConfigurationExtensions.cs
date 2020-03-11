@@ -55,7 +55,7 @@ namespace Samhammer.Logging.Logstash
                 throw new ArgumentException($"elastic index {index} contains invalid characters", nameof(index));
             }
 
-            return index;
+            return index.ToLower();
         }
 
         private static LogstashOptions LoadLogstashOptions(IConfiguration configuration)
