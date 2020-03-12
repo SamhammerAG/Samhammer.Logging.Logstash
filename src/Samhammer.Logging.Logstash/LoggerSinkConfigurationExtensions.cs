@@ -45,6 +45,10 @@ namespace Samhammer.Logging.Logstash
                 }
             }
 
+            // Ensure that the entire index is written in lower case.
+            // Other issues like special chars will lead to the exception below
+            index = index.ToLower();
+
             // ATTENTION this validation is required to ensure elastic gets an valid index name, otherwise no logs are written
             var indexRegex = new Regex(@"^((([a-z]))-?)*$");
 
@@ -53,7 +57,7 @@ namespace Samhammer.Logging.Logstash
                 throw new ArgumentException($"elastic index {index} contains invalid characters", nameof(index));
             }
 
-            return index.ToLower();
+            return index;
         }
 
         private static LogstashOptions LoadLogstashOptions(IConfiguration configuration)
