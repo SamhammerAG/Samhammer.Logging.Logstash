@@ -7,7 +7,7 @@
     <Authors>Samhammer AG</Authors>
     <PackageProjectUrl>https://github.com/SamhammerAG/Samhammer.Logging.Logstash</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SamhammerAG/Samhammer.Logging.Logstash</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/SamhammerAG/Samhammer.Logging.Logstash/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <Version>3.1.0</Version>
   </PropertyGroup>
 
