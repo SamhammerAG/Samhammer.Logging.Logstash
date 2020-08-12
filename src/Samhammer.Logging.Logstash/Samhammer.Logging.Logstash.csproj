@@ -8,7 +8,7 @@
     <PackageProjectUrl>https://github.com/SamhammerAG/Samhammer.Logging.Logstash</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SamhammerAG/Samhammer.Logging.Logstash</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>3.1.0</Version>
+    <Version>3.1.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
