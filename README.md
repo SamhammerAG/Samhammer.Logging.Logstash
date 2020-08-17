@@ -16,7 +16,7 @@ This package is a implementation of the serilog http sink https://github.com/Fan
     {
         var elasticIndexPlaceholders = new Dictionary<string, string>
         {
-            { "{environment}", environmentName.ToLower() },
+            { "{environment}", context.HostingEnvironment.EnvironmentName },
         };
             
         logger.WriteTo.Logstash(context.Configuration, elasticIndexPlaceholders)            
