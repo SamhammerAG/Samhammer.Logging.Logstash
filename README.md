@@ -12,23 +12,14 @@ This package is a implementation of the serilog http sink https://github.com/Fan
 
 #### Example:
 ```csharp
-    protected virtual void WriteToLogstash()
+    public static void ConfigureLogger(HostBuilderContext context, LoggerConfiguration logger)
     {
-        var placeholders = BuildElasticIndexPlaceholders();
-        SerilogConfig.WriteTo.Logstash(Configuration, placeholders);
-    }
-
-    protected virtual Dictionary<string, string> BuildElasticIndexPlaceholders()
-    {
-        return new Dictionary<string, string>
+        var elasticIndexPlaceholders = new Dictionary<string, string>
         {
-            {
-                "{environment}", EnvironmentName
-            },
-            {
-                "{brand}", Environment.GetEnvironmentVariable("Brand")
-            }
+            { "{environment}", environmentName.ToLower() },
         };
+            
+        logger.WriteTo.Logstash(context.Configuration, elasticIndexPlaceholders)            
     }
 ```
 
