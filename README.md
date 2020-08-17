@@ -15,7 +15,7 @@ This package is a implementation of the serilog http sink https://github.com/Fan
     protected virtual void WriteToLogstash()
     {
         var placeholders = BuildElasticIndexPlaceholders();
-        SerilogConfig.WriteToLogstash(Configuration, placeholders);
+        SerilogConfig.WriteTo.Logstash(Configuration, placeholders);
     }
 
     protected virtual Dictionary<string, string> BuildElasticIndexPlaceholders()
