@@ -12,15 +12,15 @@ This package is a implementation of the serilog http sink https://github.com/Fan
 
 #### Example:
 ```csharp
-    public static void ConfigureLogger(HostBuilderContext context, LoggerConfiguration logger)
-    {
-        var elasticIndexPlaceholders = new Dictionary<string, string>
-        {
-            { "{environment}", context.HostingEnvironment.EnvironmentName },
-        };
-            
-        logger.WriteTo.Logstash(context.Configuration, elasticIndexPlaceholders)            
-    }
+   public static void ConfigureLogger(HostBuilderContext context, LoggerConfiguration logger)
+   {
+       var elasticIndexPlaceholders = new Dictionary<string, string>
+       {
+           { "{environment}", context.HostingEnvironment.EnvironmentName },
+       };
+           
+       logger.WriteTo.Logstash(context.Configuration, elasticIndexPlaceholders)            
+   }
 ```
 
 #### Example appsettings configuration:
