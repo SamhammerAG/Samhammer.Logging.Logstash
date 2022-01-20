@@ -8,7 +8,8 @@
     <PackageProjectUrl>https://github.com/SamhammerAG/Samhammer.Logging.Logstash</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SamhammerAG/Samhammer.Logging.Logstash</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>3.1.1</Version>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Description>Logstash for .NET Core projects</Description>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,15 +17,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.7" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.7" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.7" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Serilog.Formatting.Elasticsearch" Version="8.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog.Formatting.Elasticsearch" Version="8.4.1" />
     <PackageReference Include="Serilog.Sinks.Http" Version="6.0.0" />
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.376">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
