@@ -19,13 +19,19 @@ namespace Samhammer.Logging.Logstash
 
         public static LoggerConfiguration Logstash(this LoggerSinkConfiguration sinkConfiguration, LogstashOptions logstashOptions, IDictionary<string, string> placeholders = null)
         {
-            var index = BuildElasticIndex(logstashOptions.ElasticIndex, placeholders);
+            return 
+                sinkConfiguration.Logstash(logstashOptions.Url, logstashOptions.UserName, logstashOptions.Password, logstashOptions.ElasticIndex, placeholders);
+        }
+
+        public static LoggerConfiguration Logstash(this LoggerSinkConfiguration sinkConfiguration, string url, string username, string password, string elasticIndex, IDictionary<string, string> placeholders = null)
+        {
+            var index = BuildElasticIndex(elasticIndex, placeholders);
 
             return sinkConfiguration.Http(
-                $"{logstashOptions.Url}/{index}",
+                $"{url}/{index}",
                 batchFormatter: new ArrayBatchFormatter(),
                 textFormatter: new ElasticsearchJsonFormatter(),
-                httpClient: new BasicAuthenticatedHttpClient(logstashOptions.UserName, logstashOptions.Password));
+                httpClient: new BasicAuthenticatedHttpClient(username, password));
         }
 
         public static string BuildElasticIndex(string indexTemplate, IDictionary<string, string> placeholders)
