@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Formatting.Elasticsearch;
+using Serilog.Sinks.Http;
 using Serilog.Sinks.Http.BatchFormatters;
 
 namespace Samhammer.Logging.Logstash
@@ -19,7 +20,7 @@ namespace Samhammer.Logging.Logstash
 
         public static LoggerConfiguration Logstash(this LoggerSinkConfiguration sinkConfiguration, LogstashOptions logstashOptions, IDictionary<string, string> placeholders = null)
         {
-            return 
+            return
                 sinkConfiguration.Logstash(logstashOptions.Url, logstashOptions.UserName, logstashOptions.Password, logstashOptions.ElasticIndex, placeholders);
         }
 
@@ -29,6 +30,7 @@ namespace Samhammer.Logging.Logstash
 
             return sinkConfiguration.Http(
                 $"{url}/{index}",
+                50 * ByteSize.MB,
                 batchFormatter: new ArrayBatchFormatter(),
                 textFormatter: new ElasticsearchJsonFormatter(),
                 httpClient: new BasicAuthenticatedHttpClient(username, password));

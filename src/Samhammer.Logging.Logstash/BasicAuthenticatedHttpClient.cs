@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using Serilog.Sinks.Http;
 
 namespace Samhammer.Logging.Logstash
@@ -26,15 +28,22 @@ namespace Samhammer.Logging.Logstash
             client = CreateHttpClient(username, password);
         }
 
-        public Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent content)
+        public void Configure(IConfiguration configuration)
         {
-            return client.PostAsync(requestUri, content);
+            // Only called if IConfiguration parameter is added to the httpSink configuration.
+            // This is not the case with our extension setup in LoggerSinkConfigurationExtensions
+            throw new NotImplementedException();
         }
 
-        public void Dispose()
+        public async Task<HttpResponseMessage> PostAsync(string requestUri, Stream contentStream)
         {
-            client.Dispose();
+            using (var content = new StreamContent(contentStream))
+            {
+                return await client.PostAsync(requestUri, content);
+            }
         }
+
+        public void Dispose() => client?.Dispose();
 
         private static HttpClient CreateHttpClient(string username, string password)
         {
