@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Serilog.Sinks.Http;
@@ -35,11 +36,11 @@ namespace Samhammer.Logging.Logstash
             throw new NotImplementedException();
         }
 
-        public async Task<HttpResponseMessage> PostAsync(string requestUri, Stream contentStream)
+        public async Task<HttpResponseMessage> PostAsync(string requestUri, Stream contentStream, CancellationToken cancellationToken)
         {
             using (var content = new StreamContent(contentStream))
             {
-                return await client.PostAsync(requestUri, content);
+                return await client.PostAsync(requestUri, content, cancellationToken);
             }
         }
 
